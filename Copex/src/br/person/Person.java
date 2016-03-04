@@ -34,5 +34,15 @@ public class Person {
     public String toString(){
         return nome;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
     
 }

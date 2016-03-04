@@ -8,10 +8,13 @@ package br.location;
 import br.box.Box;
 import br.certificate.Certificate;
 import br.person.Person;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -32,6 +35,9 @@ public class Location {
     
     @ManyToOne
     private Box box;
+    
+    @Temporal(TemporalType.DATE)
+    private Date dataEntregue;
     
     private boolean entregue;
 
@@ -74,7 +80,14 @@ public class Location {
     public void setEntregue(boolean entregue) {
         this.entregue = entregue;
     }
-    
+
+    public Date getDataEntregue() {
+        return dataEntregue;
+    }
+
+    public void setDataEntregue(Date dataEntregue) {
+        this.dataEntregue = dataEntregue;
+    }
     
     
     
