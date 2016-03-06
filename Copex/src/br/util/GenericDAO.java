@@ -116,10 +116,11 @@ public abstract class GenericDAO<T> {
             lista = this.getSessao().createCriteria(classe).addOrder(Order.asc(orderBy)).list();
             
         } catch (Throwable e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível listar: " + e.getMessage());
             if (getTransacao().isActive()) {
                 getTransacao().rollback();
             }
-            JOptionPane.showMessageDialog(null, "Não foi possível listar: " + e.getMessage());
+
         } finally {
             sessao.close();
         }

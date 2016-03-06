@@ -7,6 +7,8 @@ package br.screen;
 
 import br.box.Box;
 import br.box.BoxDAO;
+import br.campus.Campus;
+import br.campus.CampusDAO;
 import br.certificate.Certificate;
 import br.certificate.CertificateDAO;
 import br.location.Location;
@@ -33,6 +35,18 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         insertPersons();
         insertCertificates();
         insertBoxes();
+        insertCampus();
+    }
+    
+    private void insertCampus(){
+        cbCampus.removeAllItems();
+        cbCampus.addItem("-");
+         
+        CampusDAO pDAO = new CampusDAO();
+        List<Campus> lista = pDAO.list("descricao");
+        for (int i = 0; i < lista.size(); i++) {
+            cbCampus.addItem(lista.get(i));
+        }
     }
     
     private void insertPersons(){
@@ -93,6 +107,8 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cbCampus = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -191,7 +207,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         });
         jPanel2.add(jButton2);
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 120, 40));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 130, 40));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/procurar_1.png"))); // NOI18N
         jButton6.setToolTipText("Pesquisar Certificado");
@@ -200,9 +216,17 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
+        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 460, 240));
+        jLabel4.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel4.setText("Campus: *");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
+
+        cbCampus.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cbCampus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cbCampus, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 352, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 460, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -218,6 +242,9 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         rpf.setVisible(true);
         
         insertPersons();
+        insertBoxes();
+        insertCertificates();
+        insertCampus();
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -226,7 +253,10 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         RegisterCertificateFrm rcf = new RegisterCertificateFrm();
         rcf.setVisible(true);
         
+        insertPersons();
+        insertBoxes();
         insertCertificates();
+        insertCampus();
        
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -235,7 +265,10 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         RegisterBoxFrm rbf = new RegisterBoxFrm();
         rbf.setVisible(true);
         
+        insertPersons();
         insertBoxes();
+        insertCertificates();
+        insertCampus();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -252,8 +285,8 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         if(cbBox.getSelectedIndex()==0 || cbCertificate.getSelectedIndex()==0 
-                || cbPerson.getSelectedIndex()==0){
-            JOptionPane.showMessageDialog(rootPane, "Informe o Campos Obrigatórios (*)!");
+                || cbPerson.getSelectedIndex()==0 || cbCampus.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(rootPane, "Informe os Campos Obrigatórios (*)!");
             return ;
         }
         Location l = new Location();
@@ -261,6 +294,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         l.setCertificate((Certificate) cbCertificate.getSelectedItem());
         l.setPerson((Person) cbPerson.getSelectedItem());
         l.setEntregue(false);
+        l.setCampus((Campus) cbCampus.getSelectedItem());
         
         LocationDAO lDAO = new LocationDAO();
         lDAO.add(l);
@@ -310,6 +344,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox cbBox;
+    private javax.swing.JComboBox cbCampus;
     private javax.swing.JComboBox cbCertificate;
     private javax.swing.JComboBox cbPerson;
     private javax.swing.JButton jButton1;
@@ -322,6 +357,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

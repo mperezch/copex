@@ -11,6 +11,7 @@ import br.location.LocationDAO;
 import br.location.LocationTableModel;
 import br.person.Person;
 import br.util.ConnectionFactory;
+import br.util.FormataTamanhoColunasJTable;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -58,6 +59,8 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         SimpleDateFormat dfdtDataNascimento;
         dfdtDataNascimento = new SimpleDateFormat("dd/MM/yyyy");
         tfInitialDate.setText(dfdtDataNascimento.format(new Date()));
+        
+        FormataTamanhoColunasJTable.packColumns(tbCertificates, 1);
     }
 
     public void insertTableCertificates() {
@@ -217,7 +220,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
             viewer.setSize(1000, 600);
             viewer.setLocationRelativeTo(null);
             viewer.setModal(true);
-            pathjrxml = JasperCompileManager.compileReport("src/br/report/reportDeliveryCertificate.jrxml");
+            pathjrxml = JasperCompileManager.compileReport("report/reportDeliveryCertificate.jrxml");
             JasperPrint printReport = JasperFillManager.fillReport(pathjrxml, parametros,
                     connection);
             JasperViewer jv = new JasperViewer(printReport, false);
@@ -227,7 +230,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
 
             //jv.setVisible(true);
         } catch (JRException ex) {
-
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
 
 
@@ -264,6 +267,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

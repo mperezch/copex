@@ -6,6 +6,7 @@
 package br.location;
 
 import br.box.Box;
+import br.campus.Campus;
 import br.certificate.Certificate;
 import br.person.Person;
 import java.util.Date;
@@ -40,6 +41,9 @@ public class Location {
     private Date dataEntregue;
     
     private boolean entregue;
+    
+    @ManyToOne
+    private Campus campus;
 
     public Person getPerson() {
         return person;
@@ -88,7 +92,13 @@ public class Location {
     public void setDataEntregue(Date dataEntregue) {
         this.dataEntregue = dataEntregue;
     }
-    
-    
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
     
 }

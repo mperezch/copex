@@ -24,7 +24,7 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("serial")
 public class LocationTableModel extends AbstractTableModel {
 
-    private String[] nomeColunas = {"Código","Certificado", "Data", "CH", "Curso", "Caixa"};
+    private String[] nomeColunas = {"Código", "Certificado", "Data", "CH", "Curso", "Caixa", "Campus"};
     private List<Location> locations;
 
     /**
@@ -82,6 +82,8 @@ public class LocationTableModel extends AbstractTableModel {
                 return l.getCertificate().getCourse();
             case 5:
                 return l.getBox().getDescricao();
+            case 6:
+                return l.getCampus().getDescricao();
         }
         return null;
     }
@@ -105,6 +107,10 @@ public class LocationTableModel extends AbstractTableModel {
                 return nomeColunas[3];
             case 4:
                 return nomeColunas[4];
+            case 5:
+                return nomeColunas[5];
+            case 6:
+                return nomeColunas[6];
         }
         return null;
     }

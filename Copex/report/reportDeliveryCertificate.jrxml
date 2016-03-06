@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportDeliveryCertificate" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="10f2639d-4a5b-4400-a0b3-17f7303ff009">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="157"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="sql" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select p.nome,l.dataEntregue,c.descricao descricaoCertificado, c.ch, c.data dataCertificado,
@@ -32,7 +32,7 @@ and l.dataEntregue=$P!{sql}]]>
 		<band height="123" splitType="Stretch">
 			<image>
 				<reportElement uuid="05c75ccf-b6ec-4cae-8402-b0f182dfba47" x="0" y="0" width="555" height="112"/>
-				<imageExpression><![CDATA["C:\\Users\\Pedro Saraiva\\Documents\\GitHub\\copex\\Copex\\src\\br\\report\\LEAO.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["report\\LEAO.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -75,9 +75,9 @@ and l.dataEntregue=$P!{sql}]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="27">
+		<band height="29">
 			<textField>
-				<reportElement uuid="d2c1d241-b112-4f7b-af82-498ad4a937d3" x="0" y="0" width="310" height="23"/>
+				<reportElement uuid="d2c1d241-b112-4f7b-af82-498ad4a937d3" x="0" y="0" width="298" height="29"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial" size="10"/>
 				</textElement>
@@ -85,7 +85,7 @@ and l.dataEntregue=$P!{sql}]]>
 :  $F{descricaoCertificado}+", CH: "+$F{ch}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="d2c1d241-b112-4f7b-af82-498ad4a937d3" x="310" y="0" width="245" height="23"/>
+				<reportElement uuid="d2c1d241-b112-4f7b-af82-498ad4a937d3" x="310" y="0" width="245" height="29"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial" size="10"/>
 				</textElement>
@@ -129,7 +129,7 @@ and l.dataEntregue=$P!{sql}]]>
 		<band height="102" splitType="Stretch">
 			<image>
 				<reportElement uuid="f0cdfa2c-84a7-4f22-b258-9b7d4c4c872c" x="0" y="7" width="555" height="95"/>
-				<imageExpression><![CDATA["C:\\Users\\Pedro Saraiva\\Documents\\GitHub\\copex\\Copex\\src\\br\\report\\fundo.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["report\\fundo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</pageFooter>
