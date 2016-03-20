@@ -10,8 +10,9 @@
  * implícita de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU
  * para maiores detalhes.
  */
-package br.location;
+package br.person;
 
+import br.location.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,21 +23,20 @@ import javax.swing.table.AbstractTableModel;
  * @author adriano
  */
 @SuppressWarnings("serial")
-public class LocationTableModel extends AbstractTableModel {
+public class PersonTableModel extends AbstractTableModel {
 
-    private String[] nomeColunas = {"Código", "Certificado", "Principal", "Data", "CH", "Curso", "Caixa", "Campus", "Entregue à",
-        "Data Entregue"};
-    private List<Location> locations;
+    private String[] nomeColunas = {"Código", "Nome"};
+    private List<Person> persons;
 
     /**
      * Construtor sobrecarregado.
      *
      * @param lista List(Cidade).
      */
-    public LocationTableModel(List<Location> lista) {
-        locations = new ArrayList(new HashSet(lista));
-        this.locations.clear();
-        this.locations.addAll(lista);
+    public PersonTableModel(List<Person> lista) {
+        persons = new ArrayList(new HashSet(lista));
+        this.persons.clear();
+        this.persons.addAll(lista);
         super.fireTableDataChanged();
     }
 
@@ -47,7 +47,7 @@ public class LocationTableModel extends AbstractTableModel {
      */
     @Override
     public int getRowCount() {
-        return locations.size();
+        return persons.size();
     }
 
     /**
@@ -69,28 +69,13 @@ public class LocationTableModel extends AbstractTableModel {
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Location l = locations.get(rowIndex);
+        Person l = persons.get(rowIndex);
         switch (columnIndex) {
             case 0:
                 return l.getId();
             case 1:
-                return l.getCertificate().getDescricao();
-            case 2:
-                return l.getPerson().getNome();
-            case 3:
-                return l.getCertificate().getData();
-            case 4:
-                return l.getCertificate().getCh();
-            case 5:
-                return l.getCertificate().getCourse();
-            case 6:
-                return l.getBox().getDescricao();
-            case 7:
-                return l.getCampus().getDescricao();
-            case 8:
-                return l.getPessoaEntregue()==null?"":l.getPessoaEntregue().getNome();
-            case 9:
-                return l.getDataEntregue()==null?"":l.getDataEntregue();
+                return l.getNome();
+            
         }
         return null;
     }
@@ -110,20 +95,6 @@ public class LocationTableModel extends AbstractTableModel {
                 return nomeColunas[1];
             case 2:
                 return nomeColunas[2];
-            case 3:
-                return nomeColunas[3];
-            case 4:
-                return nomeColunas[4];
-            case 5:
-                return nomeColunas[5];
-            case 6:
-                return nomeColunas[6];
-            case 7:
-                return nomeColunas[7];
-            case 8:
-                return nomeColunas[8];
-            case 9:
-                return nomeColunas[9];
         }
         return null;
     }

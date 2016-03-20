@@ -7,7 +7,7 @@
 	<queryString>
 		<![CDATA[select p.nome,l.dataEntregue,c.descricao descricaoCertificado, c.ch, c.data dataCertificado,
 co.descricao descricaoCurso  from location l
-inner join person p on l.person_id=p.id
+inner join person p on l.pessoaEntregue_id=p.id
 inner join certificate c on c.id=l.certificate_id
 inner join course co on co.id=c.course_id
 where l.entregue=true
@@ -31,9 +31,16 @@ and l.dataEntregue=$P!{sql}]]>
 	<title>
 		<band height="123" splitType="Stretch">
 			<image>
-				<reportElement uuid="05c75ccf-b6ec-4cae-8402-b0f182dfba47" x="0" y="0" width="555" height="112"/>
+				<reportElement uuid="05c75ccf-b6ec-4cae-8402-b0f182dfba47" x="0" y="21" width="555" height="102"/>
 				<imageExpression><![CDATA["report\\LEAO.jpg"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement uuid="a7eb0a1f-ea2d-4b51-b4e3-c3119f798201" x="329" y="0" width="226" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Data/Hora Impressão: "+new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date())]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>

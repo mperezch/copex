@@ -16,9 +16,12 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -54,20 +57,27 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         lblPerson.setText(person.getNome().toString());
 
-        insertTableCertificates();
+        insertTableCertificates(false);
 
         SimpleDateFormat dfdtDataNascimento;
         dfdtDataNascimento = new SimpleDateFormat("dd/MM/yyyy");
         tfInitialDate.setText(dfdtDataNascimento.format(new Date()));
-        
+
         FormataTamanhoColunasJTable.packColumns(tbCertificates, 1);
     }
 
-    public void insertTableCertificates() {
+    public void insertTableCertificates(boolean entregue) {
         LocationDAO lDAO = new LocationDAO();
 
-        LocationTableModel ltm = new LocationTableModel(lDAO.listPerPerson(person));
+        List<Location> locationsPerson = lDAO.listPerPerson(person, entregue);
+        List<Location> locationsCoautores = lDAO.listPerCoautores(person, entregue);
+        List<Location> locationsFinal = new ArrayList<>();
+        locationsFinal.addAll(locationsPerson);
+        locationsFinal.addAll(locationsCoautores);
+        LocationTableModel ltm = new LocationTableModel(locationsFinal);
         tbCertificates.setModel(ltm);
+        FormataTamanhoColunasJTable.packColumns(tbCertificates, 1);
+        tbCertificates.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -82,39 +92,42 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btIMprimir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCertificates = new javax.swing.JTable();
         lblPerson = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         tfInitialDate = new javax.swing.JFormattedTextField();
-        Descricao_Biblioteca3 = new javax.swing.JLabel();
+        lblData = new javax.swing.JLabel();
+        cbSituacao = new javax.swing.JComboBox();
+        btPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel3.setBackground(new java.awt.Color(59, 89, 152));
         jPanel3.setLayout(null);
 
         jLabel23.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("Certificados");
+        jLabel23.setText("Consulta de Certificados");
         jPanel3.add(jLabel23);
-        jLabel23.setBounds(0, 0, 390, 30);
+        jLabel23.setBounds(0, 0, 460, 30);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(432, 177));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/imprimir2.png"))); // NOI18N
-        jButton2.setToolTipText("Imrpimir Declaração");
-        jButton2.setPreferredSize(new java.awt.Dimension(63, 39));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btIMprimir.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btIMprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/imprimir2.png"))); // NOI18N
+        btIMprimir.setToolTipText("Imrpimir Declaração");
+        btIMprimir.setPreferredSize(new java.awt.Dimension(63, 39));
+        btIMprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btIMprimirActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 57, 33));
+        jPanel1.add(btIMprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 57, 33));
 
         tbCertificates.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,11 +150,11 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbCertificates);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 660, 230));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 760, 230));
 
         lblPerson.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         lblPerson.setText("Pessoa: ");
-        jPanel1.add(lblPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, -1));
+        jPanel1.add(lblPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 520, -1));
 
         jButton3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/SA.png"))); // NOI18N
@@ -152,7 +165,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 280, 57, 33));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 290, 57, 33));
 
         try {
             tfInitialDate.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -164,16 +177,31 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         tfInitialDate.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jPanel1.add(tfInitialDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 130, 20));
 
-        Descricao_Biblioteca3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        Descricao_Biblioteca3.setText("Data: ");
-        jPanel1.add(Descricao_Biblioteca3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+        lblData.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        lblData.setText("Data: ");
+        jPanel1.add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+
+        cbSituacao.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Entregue", "Entregue" }));
+        jPanel1.add(cbSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, -1));
+
+        btPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/procurar_1.png"))); // NOI18N
+        btPesquisar.setToolTipText("Pesquisar Certificados");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 9, 40, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,7 +216,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btIMprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIMprimirActionPerformed
         if (tfInitialDate.getText().equals("  /  /    ")) {
             JOptionPane.showMessageDialog(rootPane, "Informe a Data!");
             return;
@@ -198,7 +226,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         HashMap parametros = new HashMap();
 
         String sql = "", texto = "";
-        String dataInicial="";
+        String dataInicial = "";
         try {
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             java.sql.Date data = new java.sql.Date(format.parse(tfInitialDate.getText()).getTime());
@@ -207,7 +235,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
             e.printStackTrace();
         }
 
-        sql += "'" + dataInicial + "' and p.id=" + person.getId();
+        sql += "'" + dataInicial + "' and l.pessoaEntregue_id=" + person.getId();
 
         try {
             parametros.put("sql", sql);
@@ -234,7 +262,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         }
 
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btIMprimirActionPerformed
 
     private void tbCertificatesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCertificatesMouseClicked
         // TODO add your handling code here:
@@ -247,13 +275,16 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
                 LocationDAO lDAO = new LocationDAO();
                 Location l = lDAO.checkExists("id", id).get(0);
                 if (l != null) {
-                    if (JOptionPane.showConfirmDialog(rootPane, "Entregar Certificado?",
-                            "Opção", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                        l.setEntregue(true);
-                        l.setDataEntregue(new Date());
-                        lDAO.update(l);
+                    if (l.isEntregue()==false) {
+                        if (JOptionPane.showConfirmDialog(rootPane, "Entregar Certificado?",
+                                "Opção", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                            l.setEntregue(true);
+                            l.setDataEntregue(new Date());
+                            l.setPessoaEntregue(person);
+                            lDAO.update(l);
 
-                        insertTableCertificates();
+                            btPesquisarActionPerformed(null);
+                        }
                     }
                 }
 
@@ -269,6 +300,15 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        // TODO add your handling code here:
+        insertTableCertificates(cbSituacao.getSelectedIndex() == 1);
+        tfInitialDate.setVisible(cbSituacao.getSelectedIndex() == 0);
+        btIMprimir.setVisible(cbSituacao.getSelectedIndex() == 0);
+        lblData.setVisible(cbSituacao.getSelectedIndex() == 0);
+
+    }//GEN-LAST:event_btPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,13 +351,15 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Descricao_Biblioteca3;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btIMprimir;
+    private javax.swing.JButton btPesquisar;
+    private javax.swing.JComboBox cbSituacao;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblPerson;
     private javax.swing.JTable tbCertificates;
     private javax.swing.JFormattedTextField tfInitialDate;

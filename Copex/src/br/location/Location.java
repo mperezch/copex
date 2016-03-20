@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.location;
 
 import br.box.Box;
@@ -10,9 +5,11 @@ import br.campus.Campus;
 import br.certificate.Certificate;
 import br.person.Person;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,6 +28,9 @@ public class Location {
     @ManyToOne
     private Person person;
     
+    @ManyToMany
+    private List<Person> cooautores;
+    
     @ManyToOne
     private Certificate certificate;
     
@@ -41,6 +41,9 @@ public class Location {
     private Date dataEntregue;
     
     private boolean entregue;
+    
+    @ManyToOne
+    private Person pessoaEntregue;
     
     @ManyToOne
     private Campus campus;
@@ -99,6 +102,22 @@ public class Location {
 
     public void setCampus(Campus campus) {
         this.campus = campus;
+    }
+
+    public List<Person> getCooautores() {
+        return cooautores;
+    }
+
+    public void setCooautores(List<Person> cooautores) {
+        this.cooautores = cooautores;
+    }
+
+    public Person getPessoaEntregue() {
+        return pessoaEntregue;
+    }
+
+    public void setPessoaEntregue(Person pessoaEntregue) {
+        this.pessoaEntregue = pessoaEntregue;
     }
     
 }

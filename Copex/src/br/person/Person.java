@@ -22,6 +22,8 @@ public class Person {
     private int id;
     
     private String nome;
+    
+    private boolean pExterno;
 
     public String getNome() {
         return nome;
@@ -42,7 +44,36 @@ public class Person {
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Person other = (Person) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean ispExterno() {
+        return pExterno;
+    }
+
+    public void setpExterno(boolean pExterno) {
+        this.pExterno = pExterno;
+    }
     
     
 }

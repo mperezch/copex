@@ -11,6 +11,7 @@ import br.util.GenericDAO;
 import br.util.HibernateUtil;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -23,14 +24,36 @@ public class LocationDAO extends GenericDAO<Location>{
         super(Location.class);
     }
     
-    public List<Location> listPerPerson(Person p) {
+    public List<Location> listPerPerson(Person p, boolean entregue) {
         List<Location> lista = null;
         try {
             this.setSessao(HibernateUtil.getSessionFactory().openSession());
             setTransacao(getSessao().beginTransaction());
             lista = this.getSessao().createCriteria(Location.class)
                     .add(Restrictions.eq("person", p)).
-                    add(Restrictions.eq("entregue", false)).list();
+                    add(Restrictions.eq("entregue", entregue)).list();
+            
+        } catch (Throwable e) {
+            if (getTransacao().isActive()) {
+                getTransacao().rollback();
+            }
+            JOptionPane.showMessageDialog(null, "Não foi possível listar: " + e.getMessage());
+        } finally {
+            getSessao().close();
+        }
+        return lista;
+    }
+    
+    public List<Location> listPerCoautores(Person p, boolean entregue) {
+        List<Location> lista = null;
+        try {
+            this.setSessao(HibernateUtil.getSessionFactory().openSession());
+            setTransacao(getSessao().beginTransaction());
+            Criteria crit = this.getSessao().createCriteria(Location.class);
+            crit.createAlias("cooautores", "c");
+            crit.add(Restrictions.eq("c.nome", p.getNome()));
+            crit.add(Restrictions.eq("entregue", entregue));
+            lista = crit.list();
             
         } catch (Throwable e) {
             if (getTransacao().isActive()) {
