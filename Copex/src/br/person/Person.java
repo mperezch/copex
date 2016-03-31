@@ -24,6 +24,8 @@ public class Person {
     private String nome;
     
     private boolean pExterno;
+    
+    private boolean professor;
 
     public String getNome() {
         return nome;
@@ -74,6 +76,15 @@ public class Person {
     public void setpExterno(boolean pExterno) {
         this.pExterno = pExterno;
     }
+
+    public boolean isProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(boolean professor) {
+        this.professor = professor;
+    }
+
     
     
 }

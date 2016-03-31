@@ -5,10 +5,21 @@
  */
 package br.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author pelusb
  */
 public class Teste {
-    
+
+    public static void main(String[] args) {
+        System.out.println(LoadPropriedade.loadProperty("servidor"));
+        System.out.println(LoadPropriedade.loadProperty("user"));
+        System.out.println(LoadPropriedade.loadProperty("senha"));
+    }
 }

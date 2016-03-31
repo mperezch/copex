@@ -256,7 +256,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         if (cbPerson.getSelectedIndex() != 0) {
-            coautores = AddCoautoresFrm.show(coautores, (Person)cbPerson.getSelectedItem());
+            coautores = AddCoautoresFrm.show(coautores, (Person) cbPerson.getSelectedItem());
         } else {
             JOptionPane.showMessageDialog(rootPane, "Informe o autor principal!");
             cbPerson.requestFocus();
@@ -313,13 +313,25 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         l.setCampus((Campus) cbCampus.getSelectedItem());
 
         LocationDAO lDAO = new LocationDAO();
+        Person p = (Person) cbPerson.getSelectedItem();
+        if (lDAO.verify(p,
+                (Certificate) cbCertificate.getSelectedItem()).size() > 0) {
+            if (JOptionPane.showConfirmDialog(rootPane, "Certificado Já Cadastrado para: "
+                    + " \n" + p.getNome() + ", deseja cadastrar outro?", "Info", JOptionPane.YES_NO_OPTION)
+                    == JOptionPane.YES_OPTION) {
+
+            } else {
+                return ;
+            }
+        }
+
         lDAO.add(l);
 
         cbBox.setSelectedIndex(0);
         cbPerson.setSelectedIndex(0);
         cbCertificate.setSelectedIndex(0);
         coautores = new ArrayList<>();
-        
+
         insertBoxes();
 //        insertCampus();
         insertCertificates();

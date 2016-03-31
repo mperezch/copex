@@ -64,6 +64,18 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         tfInitialDate.setText(dfdtDataNascimento.format(new Date()));
 
         FormataTamanhoColunasJTable.packColumns(tbCertificates, 1);
+        String texto="";
+        if(person.ispExterno()){
+            texto = "Público Externo";
+        } else {
+            texto = "Público Interno";
+        }
+        if(person.isProfessor()){
+            texto += ", Professor.";
+        } else {
+            texto += ".";
+        }
+        lblInfo.setText(texto);
     }
 
     public void insertTableCertificates(boolean entregue) {
@@ -95,12 +107,13 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         btIMprimir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCertificates = new javax.swing.JTable();
-        lblPerson = new javax.swing.JLabel();
+        lblInfo = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         tfInitialDate = new javax.swing.JFormattedTextField();
         lblData = new javax.swing.JLabel();
         cbSituacao = new javax.swing.JComboBox();
         btPesquisar = new javax.swing.JButton();
+        lblPerson = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -152,9 +165,9 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 760, 230));
 
-        lblPerson.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        lblPerson.setText("Pessoa: ");
-        jPanel1.add(lblPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 520, -1));
+        lblInfo.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        lblInfo.setText("lblInfo");
+        jPanel1.add(lblInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 520, -1));
 
         jButton3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/SA.png"))); // NOI18N
@@ -182,7 +195,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         jPanel1.add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
 
         cbSituacao.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Entregue", "Entregue" }));
+        cbSituacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Não Entregues", "Entregues" }));
         jPanel1.add(cbSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, -1));
 
         btPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/procurar_1.png"))); // NOI18N
@@ -193,6 +206,10 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
             }
         });
         jPanel1.add(btPesquisar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 9, 40, 30));
+
+        lblPerson.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
+        lblPerson.setText("Pessoa: ");
+        jPanel1.add(lblPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 520, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -360,6 +377,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblData;
+    private javax.swing.JLabel lblInfo;
     private javax.swing.JLabel lblPerson;
     private javax.swing.JTable tbCertificates;
     private javax.swing.JFormattedTextField tfInitialDate;

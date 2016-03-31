@@ -13,8 +13,8 @@ public class ConnectionFactory {
     public Connection getConnection() {
         System.out.println("Conectando ao Banco de Dados...");
         try {
-            return DriverManager.getConnection("jdbc:mysql://localhost/copex",  //192.168.3.38
-                    "root", "root");
+            return DriverManager.getConnection("jdbc:mysql://"+LoadPropriedade.loadProperty("servidor")+"/"+LoadPropriedade.loadProperty("banco"),  //192.168.3.38
+                    LoadPropriedade.loadProperty("user"), LoadPropriedade.loadProperty("senha"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

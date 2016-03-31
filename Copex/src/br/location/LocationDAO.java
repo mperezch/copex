@@ -44,6 +44,27 @@ public class LocationDAO extends GenericDAO<Location>{
         return lista;
     }
     
+    //verifica se já foi cadastrado o certificado
+    public List<Location> verify(Person p, Certificate c) {
+        List<Location> lista = null;
+        try {
+            this.setSessao(HibernateUtil.getSessionFactory().openSession());
+            setTransacao(getSessao().beginTransaction());
+            lista = this.getSessao().createCriteria(Location.class)
+                    .add(Restrictions.eq("person", p)).
+                    add(Restrictions.eq("certificate", c)).list();
+            
+        } catch (Throwable e) {
+            if (getTransacao().isActive()) {
+                getTransacao().rollback();
+            }
+            JOptionPane.showMessageDialog(null, "Não foi possível listar: " + e.getMessage());
+        } finally {
+            getSessao().close();
+        }
+        return lista;
+    }
+    
     public List<Location> listPerCoautores(Person p, boolean entregue) {
         List<Location> lista = null;
         try {
