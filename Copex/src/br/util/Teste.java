@@ -18,8 +18,7 @@ import java.util.logging.Logger;
 public class Teste {
 
     public static void main(String[] args) {
-        System.out.println(LoadPropriedade.loadProperty("servidor"));
-        System.out.println(LoadPropriedade.loadProperty("user"));
-        System.out.println(LoadPropriedade.loadProperty("senha"));
+        String EnderecoDoJar = System.getProperty("java.class.path");
+        System.out.println(EnderecoDoJar);
     }
 }

@@ -1,5 +1,6 @@
 package br.util;
 
+import javax.swing.JOptionPane;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
@@ -17,6 +18,7 @@ public class HibernateUtil {
         try {
             Configuration cfg
                     = new Configuration();
+//            JOptionPane.showMessageDialog(null, LoadPropriedade.loadProperty("servidor"));
             cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
             cfg.setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver");
             cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + LoadPropriedade.loadProperty("servidor") + "/" + LoadPropriedade.loadProperty("banco"));
