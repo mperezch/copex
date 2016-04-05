@@ -12,6 +12,11 @@ import br.location.LocationTableModel;
 import br.person.Person;
 import br.util.ConnectionFactory;
 import br.util.FormataTamanhoColunasJTable;
+import br.util.Util;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -265,7 +270,9 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
             viewer.setSize(1000, 600);
             viewer.setLocationRelativeTo(null);
             viewer.setModal(true);
-            pathjrxml = JasperCompileManager.compileReport("report/reportDeliveryCertificate.jrxml");
+            File file = new File(Util.retornaCaminhoApp()+"/report/reportDeliveryCertificate.jrxml");
+            FileInputStream is = new FileInputStream(file);
+            pathjrxml = JasperCompileManager.compileReport(is);
             JasperPrint printReport = JasperFillManager.fillReport(pathjrxml, parametros,
                     connection);
             JasperViewer jv = new JasperViewer(printReport, false);
@@ -275,6 +282,8 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
 
             //jv.setVisible(true);
         } catch (JRException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
 

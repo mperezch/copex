@@ -29,7 +29,7 @@ public class HibernateUtil {
             return cfg.buildSessionFactory();
         } catch (Throwable e) {
             // TODO: handle exception
-            System.out.println("Criação inicial do objeto"
+            JOptionPane.showMessageDialog(null,"Criação inicial do objeto"
                     + " SessionFactory falhou. Erro: " + e);
             throw new ExceptionInInitializerError(e);
         }

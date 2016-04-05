@@ -110,6 +110,7 @@ public class Util {
         //comparar o digito verificador do cpf com o primeiro resto + o segundo resto.  
         return nDigVerific.equals(nDigResult);
     }
+
     /* @MD5 MÃ©todo de EncriptaÃ§Ã£o da Senha em um HASH Hexadecimal */
 
     public static String md5(String senha) {
@@ -262,6 +263,11 @@ public class Util {
         }
         return cal;
     }
-    
+
+    public static String retornaCaminhoApp() {
+        String EnderecoDoJar = System.getProperty("java.class.path");
+        String end = EnderecoDoJar.substring(0, EnderecoDoJar.length() - 9);
+        return end;
+    }
 
 }

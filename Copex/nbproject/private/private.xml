@@ -5,10 +5,8 @@
         <group>
             <file>file:/home/pelusb/github/copex/Copex/src/hibernate.cfg.xml</file>
             <file>file:/home/pelusb/github/copex/Copex/src/br/util/HibernateUtil.java</file>
-            <file>file:/home/pelusb/github/copex/Copex/src/br/util/Teste.java</file>
-            <file>file:/home/pelusb/github/copex/Copex/src/br/screen/RegisterLocationFrm.java</file>
-            <file>file:/home/pelusb/github/copex/Copex/src/br/util/Util.java</file>
             <file>file:/home/pelusb/github/copex/Copex/src/br/screen/FindCertificatesFrm.java</file>
+            <file>file:/home/pelusb/github/copex/Copex/src/br/util/Util.java</file>
             <file>file:/home/pelusb/github/copex/Copex/src/br/util/LoadPropriedade.java</file>
         </group>
     </open-files>

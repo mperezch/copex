@@ -13,24 +13,22 @@ public class LoadPropriedade {
 
     private static Properties config = new Properties();
     private static String arquivo = "config.ini";//local do arquivo
-    private static String EnderecoDoJar;// =   new File(".").getCanonicalPath();//System.getProperty("user.dir");
+    private static String enderecoDoJar;// =   new File(".").getCanonicalPath();//System.getProperty("user.dir");
 
     public static String loadProperty(String property) {
 
         try {
-            EnderecoDoJar =   new File(".").getCanonicalPath();
-            File file = new File(EnderecoDoJar+"/"+arquivo);
+            enderecoDoJar =Util.retornaCaminhoApp()+"/config.ini";
+            File file = new File(enderecoDoJar);
             FileInputStream f = new FileInputStream(file);
             config.load(f);
 
-            
             return config.getProperty(property);
 //                        System.out.println(config.getProperty("param1"));
 //                        System.out.println(config.getProperty("final"));
 
-            
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage()+"\n Endere: "+EnderecoDoJar);
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n Endere: " + enderecoDoJar);
             return null;
         }
 
