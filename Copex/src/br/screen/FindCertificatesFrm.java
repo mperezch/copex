@@ -263,6 +263,8 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
             parametros.put("sql", sql);
         } catch (Exception e) {
         }
+        parametros.put("cabecalho",Util.retornaCaminhoApp()+"/report/cabecalho.jpg");
+        parametros.put("rodape",Util.retornaCaminhoApp()+"/report/rodape.jpg");
 
         Connection connection = new ConnectionFactory().getConnection();
         try {
