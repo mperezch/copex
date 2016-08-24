@@ -26,6 +26,8 @@ public class Person {
     private boolean pExterno;
     
     private boolean professor;
+    
+    private String email;
 
     public String getNome() {
         return nome;
@@ -83,6 +85,14 @@ public class Person {
 
     public void setProfessor(boolean professor) {
         this.professor = professor;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     

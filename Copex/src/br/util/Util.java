@@ -112,7 +112,6 @@ public class Util {
     }
 
     /* @MD5 MÃ©todo de EncriptaÃ§Ã£o da Senha em um HASH Hexadecimal */
-
     public static String md5(String senha) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -268,6 +267,19 @@ public class Util {
         String EnderecoDoJar = System.getProperty("java.class.path");
         String end = EnderecoDoJar.substring(0, EnderecoDoJar.length() - 9);
         return end;
+    }
+
+    public static boolean validEmail(String email) {
+        System.out.println("Metodo de validacao de email");
+        Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$");
+        Matcher m = p.matcher(email);
+        if (m.find()) {
+            System.out.println("O email " + email + " e valido");
+            return true;
+        } else {
+            System.out.println("O E-mail " + email + " é inválido");
+            return false;
+        }
     }
 
 }

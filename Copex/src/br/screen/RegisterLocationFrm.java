@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  *
  * @author Pedro Saraiva
  */
-public class RegisterLocationFrm extends javax.swing.JFrame {
+public class RegisterLocationFrm extends javax.swing.JDialog {
 
     private List<Person> coautores = new ArrayList<Person>();
 
@@ -34,6 +34,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         initComponents();
         setTitle("Localização de Certificados");
         setLocationRelativeTo(null);
+        setModal(true);
 
         insertPersons();
         insertCertificates();
@@ -116,7 +117,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
         cbCampus = new javax.swing.JComboBox();
         jButton7 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -250,7 +251,7 @@ public class RegisterLocationFrm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+       dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

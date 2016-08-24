@@ -7,6 +7,7 @@ package br.screen;
 
 import br.person.Person;
 import br.person.PersonDAO;
+import br.util.Util;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,16 +41,19 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
         cbPExterno = new javax.swing.JCheckBox();
         cbProfessor = new javax.swing.JCheckBox();
+        tfEmail = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jLabel1.setText("Nome: *");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         tfNome.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        getContentPane().add(tfNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 371, -1));
+        getContentPane().add(tfNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 371, -1));
 
         jButton1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButton1.setText("Sair");
@@ -58,7 +62,7 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
 
         jButton2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButton2.setText("Cadastrar");
@@ -67,13 +71,22 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, -1, -1));
 
+        cbPExterno.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         cbPExterno.setText("Público Externo?");
-        getContentPane().add(cbPExterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 70, -1, -1));
+        getContentPane().add(cbPExterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
+        cbProfessor.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         cbProfessor.setText("Professor?");
-        getContentPane().add(cbProfessor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, -1, -1));
+        getContentPane().add(cbProfessor, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+
+        tfEmail.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        getContentPane().add(tfEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 370, 20));
+
+        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel2.setText("Email:");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -85,18 +98,25 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        if(tfNome.getText().equals("")){
-            JOptionPane.showMessageDialog(rootPane, "Informe o Nome!");
+        if (tfNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Informe os campos obrigatórios(*)!");
             tfNome.requestFocus();
             return;
         }
+        
+        if(!Util.validEmail(tfEmail.getText())&&!tfEmail.getText().isEmpty()){
+            JOptionPane.showMessageDialog(rootPane, "Email inválido!");
+            tfEmail.requestFocus();
+            return;
+        }
+        
         Person p = new Person();
         p.setNome(tfNome.getText());
         p.setpExterno(cbPExterno.isSelected());
         p.setProfessor(cbProfessor.isSelected());
-        
+        p.setEmail((tfEmail.getText()));
         setVisible(false);
-        
+
         PersonDAO pDAO = new PersonDAO();
         pDAO.add(p);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -142,6 +162,8 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }

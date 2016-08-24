@@ -24,7 +24,7 @@ public class HibernateUtil {
             cfg.setProperty("hibernate.connection.url", "jdbc:mysql://" + LoadPropriedade.loadProperty("servidor") + "/" + LoadPropriedade.loadProperty("banco"));
             cfg.setProperty("hibernate.connection.username", LoadPropriedade.loadProperty("user"));
             cfg.setProperty("hibernate.connection.password", LoadPropriedade.loadProperty("senha"));
-            
+           
             cfg.configure("hibernate.cfg.xml");
             return cfg.buildSessionFactory();
         } catch (Throwable e) {

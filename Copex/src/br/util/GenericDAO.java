@@ -38,16 +38,13 @@ public abstract class GenericDAO<T> {
             this.setSessao(HibernateUtil.getSessionFactory().openSession());
             this.setTransacao(getSessao().beginTransaction());
             this.getSessao().save(entity);
-            this.getTransacao().commit();
-
-           
+            this.getTransacao().commit();           
         } catch (HibernateException e) {
             System.out.println(e.getMessage()+" | "+e.getCause());
             JOptionPane.showMessageDialog(null, "Não foi possível inserir " + entity.getClass()
                     + ". Erro: " + e.getMessage());
             return false;
         } finally {
-            
             getSessao().close();
         }
         return true;
@@ -190,5 +187,23 @@ public abstract class GenericDAO<T> {
      */
     public void setTransacao(Transaction transacao) {
         this.transacao = transacao;
+    }
+    
+    public List<T> listar (String campo, Object valor){
+     
+    List<T> lista = null;
+        try{
+           sessao = HibernateUtil.getSessionFactory().openSession();
+           lista = sessao.createCriteria(classe).add(Restrictions.eq(campo, valor)).list();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            return lista;
+        } finally {
+            sessao.close();
+        }
+        return lista;
+    
+    
     }
 }
