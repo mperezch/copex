@@ -37,22 +37,24 @@ public class EnviaEmails implements Runnable{
 
    
 
-        String mensagem = "Através deste e-mail a COPEX dar ciência da entrega do "
-                + "Documento de Nº " + Util.decimalFormat().format(doc.getId()) + ", recebido por " + doc.getPessoaEntregadora().getNome()
+        String mensagem = "Através deste e-mail a COPEX vem dar ciência da entrega do "
+                + "Documento de Nº " + Util.decimalFormat().format(doc.getId()) + ", recebido de " + doc.getPessoaEntregadora().getNome()
                 + " sob responsabilidade de " + doc.getPessoaResponsavel().getNome() + ", na data de " + retornaDataHoraFormatada("dd/MM/yyyy", doc.getData()) 
                 + " às "+retornaDataHoraFormatada("hh:mm", doc.getHora())+ ".\n"
                 + "\n" + doc.getSubCategoria().getDescricao() + " - " + doc.getSubCategoria().getCategoria().getDescricao()+"."
                 + "\nCurso: " + doc.getCurso().getDescricao()+".";
         
         if(doc.isEstaDentroDoPrazo()){
-            mensagem+="\nO documento está no prazo de entrega.";
+            mensagem+="\nO documento ESTÁ no prazo de entrega.";
         } else {
             mensagem+="\nO documento NÃO está no prazo de entrega.";
         }
+        
+        mensagem+="\n\n\nSIC - UniLeão - Desenvolvido por Alunos do Curso de Análise e Desenvolvimento de Sistemas.";
 
         try {
             mandarEmail("copex@leaosampaio.edu.br", "senhadocopex", person.getEmail(),
-                    "Sistema Eletrônico Copex - SEC ("+Util.decimalFormat().format(doc.getId())+")", mensagem);
+                    "Sistema Informatizado Copex - SIC ("+Util.decimalFormat().format(doc.getId())+")", mensagem);
         } catch (Exception e) {
                JOptionPane.showMessageDialog(null, "Não foi possível enviar e-mail para: "
                      + person.getNome() + "\nMotivo: " + e.getMessage());

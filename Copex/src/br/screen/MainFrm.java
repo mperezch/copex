@@ -34,9 +34,11 @@ public class MainFrm extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btDocumentos = new javax.swing.JButton();
+        btPerson = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btCertificados = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -49,46 +51,63 @@ public class MainFrm extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/archive.png"))); // NOI18N
-        jButton2.setToolTipText("Documentos");
-        jButton2.setHideActionText(true);
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btDocumentos.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btDocumentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/archive.png"))); // NOI18N
+        btDocumentos.setToolTipText("Documentos");
+        btDocumentos.setHideActionText(true);
+        btDocumentos.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        btDocumentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btDocumentosActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
+        jPanel1.add(btDocumentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/diploma.png"))); // NOI18N
-        jButton1.setToolTipText("Certificados");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btPerson.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/team.png"))); // NOI18N
+        btPerson.setToolTipText("Pessoas");
+        btPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btPersonActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
+        jPanel1.add(btPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SISTEMA INFORMATIZADO DA COPEX");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 540, -1));
 
+        btCertificados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/imagens/diploma.png"))); // NOI18N
+        btCertificados.setToolTipText("Certificados");
+        btCertificados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCertificadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btCertificados, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+
+        jLabel2.setText("Desenvolvido pelo Curso de Análise e Desenvolvimento de Sistemas - UniLeão - Versão 2.0");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 540, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 270));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        RegisterLocationFrm rlf = new RegisterLocationFrm();
-        rlf.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPersonActionPerformed
+        FindPersonFrm fpfrm = new FindPersonFrm();
+        fpfrm.setVisible(true);
+    }//GEN-LAST:event_btPersonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDocumentosActionPerformed
        DocumentsFrm dFrm = new DocumentsFrm();
        dFrm.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btDocumentosActionPerformed
+
+    private void btCertificadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCertificadosActionPerformed
+        RegisterLocationFrm rlf = new RegisterLocationFrm();
+        rlf.setVisible(true);
+    }//GEN-LAST:event_btCertificadosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,9 +145,11 @@ public class MainFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btCertificados;
+    private javax.swing.JButton btDocumentos;
+    private javax.swing.JButton btPerson;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

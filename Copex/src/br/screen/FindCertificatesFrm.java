@@ -119,6 +119,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         cbSituacao = new javax.swing.JComboBox();
         btPesquisar = new javax.swing.JButton();
         lblPerson = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -216,6 +217,15 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
         lblPerson.setText("Pessoa: ");
         jPanel1.add(lblPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 520, -1));
 
+        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton2.setText("Excluir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 290, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,7 +242,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE))
         );
 
         pack();
@@ -338,6 +348,30 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btPesquisarActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (tbCertificates.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecioen uma linha da tabela!");
+        } else {
+            LocationTableModel ptm = (LocationTableModel) tbCertificates.getModel();
+            Location locationSelecionada = ptm.getLocation(tbCertificates.getSelectedRow());
+            if (JOptionPane.showConfirmDialog(rootPane, "Deseja Excluir a Localização " + locationSelecionada.getId() + "?",
+                "Excluir Localização", JOptionPane.YES_NO_OPTION)
+            == JOptionPane.YES_OPTION) {
+            LocationDAO lDAO = new LocationDAO();
+            try {
+                lDAO.remove(locationSelecionada);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Localização não pode ser excluída!");
+            }
+            
+            
+            insertTableCertificates(cbSituacao.getSelectedIndex() == 1);
+            
+        }
+
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -382,6 +416,7 @@ public class FindCertificatesFrm extends javax.swing.JDialog {
     private javax.swing.JButton btIMprimir;
     private javax.swing.JButton btPesquisar;
     private javax.swing.JComboBox cbSituacao;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JPanel jPanel1;

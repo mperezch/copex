@@ -109,6 +109,7 @@ public class FindDocumentFrm extends javax.swing.JDialog {
         lblInfo = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         lblPerson = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -167,6 +168,15 @@ public class FindDocumentFrm extends javax.swing.JDialog {
         lblPerson.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         lblPerson.setText("Pessoa: ");
         jPanel1.add(lblPerson, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 520, -1));
+
+        jButton2.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jButton2.setText("Excluir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 290, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,6 +239,28 @@ public class FindDocumentFrm extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (tbCertificates.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(rootPane, "Selecioen uma linha da tabela!");
+        } else {
+            DocumentTableModel ptm = (DocumentTableModel) tbCertificates.getModel();
+            Document documentSelecionada = ptm.getDocumento(tbCertificates.getSelectedRow());
+            if (JOptionPane.showConfirmDialog(rootPane, "Deseja Excluir o Documento " + documentSelecionada.getId() + "?",
+                "Excluir Documento", JOptionPane.YES_NO_OPTION)
+            == JOptionPane.YES_OPTION) {
+            DocumentDAO lDAO = new DocumentDAO();
+            try {
+                lDAO.remove(documentSelecionada);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(rootPane, "Documento não pode ser excluída!");
+            }
+            insertTableDocuments();
+
+        }
+
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -271,6 +303,7 @@ public class FindDocumentFrm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JPanel jPanel1;

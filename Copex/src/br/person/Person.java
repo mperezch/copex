@@ -15,11 +15,11 @@ import javax.persistence.Id;
  * @author Pedro Saraiva
  */
 @Entity
-public class Person {
+public class Person implements Comparable<Person>{
     
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     
     private String nome;
     
@@ -41,11 +41,11 @@ public class Person {
         return nome;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -93,6 +93,19 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getProfessorAluno(){
+        if(professor){
+            return "Professor";
+        } else {
+            return "Aluno";
+        }
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return nome.compareTo(o.nome);
     }
 
     

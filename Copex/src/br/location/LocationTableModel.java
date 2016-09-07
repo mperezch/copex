@@ -94,6 +94,10 @@ public class LocationTableModel extends AbstractTableModel {
         }
         return null;
     }
+    
+    public Location getLocation(int rowIndex) {
+        return locations.get(rowIndex);
+    }
 
     /**
      * Método sobrescrito.

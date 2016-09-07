@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class RegisterPersonFrm extends javax.swing.JDialog {
 
+    private Person person;
     /**
      * Creates new form RegisterPersonFrm
      */
@@ -24,8 +25,20 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setModal(true);
         setTitle("Cadastro de Pessoa");
+        this.person = new Person();
     }
 
+    public RegisterPersonFrm(Person person) {
+        initComponents();
+        setLocationRelativeTo(null);
+        setModal(true);
+        setTitle("Cadastro de Pessoa");
+        this.person = person;
+        tfEmail.setText(person.getEmail());
+        tfNome.setText(person.getNome());
+        cbPExterno.setSelected(person.ispExterno());
+        cbProfessor.setSelected(person.isProfessor());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,15 +123,20 @@ public class RegisterPersonFrm extends javax.swing.JDialog {
             return;
         }
         
-        Person p = new Person();
-        p.setNome(tfNome.getText());
-        p.setpExterno(cbPExterno.isSelected());
-        p.setProfessor(cbProfessor.isSelected());
-        p.setEmail((tfEmail.getText()));
+       
+        person.setNome(tfNome.getText());
+        person.setpExterno(cbPExterno.isSelected());
+        person.setProfessor(cbProfessor.isSelected());
+        person.setEmail((tfEmail.getText()));
         setVisible(false);
 
         PersonDAO pDAO = new PersonDAO();
-        pDAO.add(p);
+        if(person.getId()==null){
+            pDAO.add(person);
+        } else {
+            pDAO.update(person);
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

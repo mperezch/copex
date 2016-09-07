@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -69,20 +70,20 @@ public abstract class GenericDAO<T> {
     }
 
     public boolean remove(T entity) {
-        try {
+//        try {
             this.setSessao(HibernateUtil.getSessionFactory().openSession());
             this.setTransacao(getSessao().beginTransaction());
             this.getSessao().delete(entity);
             this.getTransacao().commit();
             
-        } catch (HibernateException e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível remover " + entity.getClass()
-                    + ". Erro: " + e.getMessage());
-            return false;
-        } finally {
+//        } catch (HibernateException e) {
+//            JOptionPane.showMessageDialog(null, "Não foi possível remover " + entity.getClass()
+//                    + ". Erro: " + e.getMessage());
+//            return false;
+//        } finally {
             getSessao().close();
 
-        }
+//        }
         return true;
     }
 
@@ -161,6 +162,26 @@ public abstract class GenericDAO<T> {
 
     }
 
+    public List<T> checkExistsLike(String campo, String valor) {
+        List<T> lista = null;
+        try {
+            this.setSessao(HibernateUtil.getSessionFactory().openSession());
+            setTransacao(getSessao().beginTransaction());
+            lista = this.getSessao().createCriteria(classe).add(Restrictions.like(campo, valor, MatchMode.ANYWHERE)).list();
+            
+        } catch (Throwable e) {
+            if (getTransacao().isActive()) {
+                getTransacao().rollback();
+            }
+            JOptionPane.showMessageDialog(null, "Não foi possível listar: " + e.getMessage());
+        } finally {
+            sessao.close();
+        }
+        return lista;
+
+    }
+    
+    
     /**
      * @return the sessao
      */

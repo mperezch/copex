@@ -13,6 +13,7 @@
 package br.person;
 
 import br.location.*;
+import br.util.Util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ import javax.swing.table.AbstractTableModel;
 @SuppressWarnings("serial")
 public class PersonTableModel extends AbstractTableModel {
 
-    private String[] nomeColunas = {"Código", "Nome"};
+    private String[] nomeColunas = {"Código", "Nome", "Email", " "};
     private List<Person> persons;
 
     /**
@@ -36,6 +37,7 @@ public class PersonTableModel extends AbstractTableModel {
     public PersonTableModel(List<Person> lista) {
         persons = new ArrayList(new HashSet(lista));
         this.persons.clear();
+        Collections.sort(lista);
         this.persons.addAll(lista);
         super.fireTableDataChanged();
     }
@@ -72,14 +74,21 @@ public class PersonTableModel extends AbstractTableModel {
         Person l = persons.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return l.getId();
+                return Util.decimalFormat().format(l.getId());
             case 1:
                 return l.getNome();
-            
+            case 2:
+                return (l.getEmail() != null ? l.getEmail() : " - ");
+            case 3:
+                return l.getProfessorAluno();
+
         }
         return null;
     }
-
+    
+    public Person getPessoa(int rowIndex) {
+        return persons.get(rowIndex);
+    }
     /**
      * Método sobrescrito.
      *
@@ -95,6 +104,8 @@ public class PersonTableModel extends AbstractTableModel {
                 return nomeColunas[1];
             case 2:
                 return nomeColunas[2];
+            case 3:
+                return nomeColunas[3];
         }
         return null;
     }
